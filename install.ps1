@@ -10,6 +10,9 @@ function Unzip
 
 Unzip "C:\PMMP\PocketMine-MP.zip" "C:\PMMP"
 Get-Childitem "C:\PMMP\archive" -recurse -filter "*.phar" | Copy-Item -Destination "C:\PMMP"
-Remove-Item C:\PMMP\archive
+Remove-Item C:\PMMP\archive -recurse
 Remove-Item C:\PMMP\PocketMine-MP.zip
-Rename-Item -Path "C:\PMMP\PocketMine-MP*.phar" -NewName "PocketMine-MP.phar"
+# Rename-Item -LiteralPath "C:\PMMP\PocketMine-MP*.phar" -NewName "PocketMine-MP.phar"
+$dir = "C:\PMMP"
+$file = "PocketMine-MP*.phar"
+get-childitem -Path $dir | where-object { $_.Name -like $file } | %{ rename-item -LiteralPath $_.FullName -NewName "PocketMine-MP.phar" }
